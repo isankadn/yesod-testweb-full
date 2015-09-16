@@ -1,0 +1,41 @@
+(function() {
+
+  $(window).on('drop', drop);
+  $(window).on({'dragenter': prevent, 'dragover': prevent, 'dragleave': prevent});
+
+  function prevent(e) {
+    e.preventDefault();
+  }
+
+  function drop(e) {
+    e.preventDefault();
+
+    var files = e.originalEvent.dataTransfer.files;
+
+    for ( var i = 0, file; file = files[i]; ++i ) {
+
+      if ( !files[i].type.match(/image.*/) ) {
+        alert('#{rawJS $ mr MsgNotImage}');
+        continue;
+      }
+
+      $.ajax({
+        headers: { 'filename': file.name },
+        url: '@{ImageR}',
+        type: 'POST',
+        data: file,
+        processData: false,
+        contentType: file.type,
+        success: function(url) {
+          console.log(url);
+          var textArea = $('textarea');
+          textArea.val(textArea.val() + '<img class="m-t m-b center-block img-responsive" src="' + url + '"/>');
+        },
+        error: function(res) {
+          alert('#{rawJS $ mr MsgImageUploadFailed}');
+        }
+      });
+    }
+  }
+
+})();

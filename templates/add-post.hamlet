@@ -1,0 +1,5 @@
+<div .container>
+  <form .m-t method=post action=@{AddPostR}#form enctype=#{formEnctype}>
+    ^{formWidget}
+
+  <a href=@{AdminR} .btn .btn-secondary .btn-block .btn-lg>_{MsgBack}

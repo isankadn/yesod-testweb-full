@@ -1,0 +1,28 @@
+<img #banner .img-responsive alt=TFS src=@{StaticR img_banner_01_jpg}>
+<div .container>
+  <div .row .m-t-lg>
+    <div .col-sm-9>
+      <div .posts>
+        $forall Entity _ post <- posts
+          <div .post>
+            <h1 .post-title>#{postTitle post}
+            <small .post-created .text-muted>#{showTime tz $ postCreated post}
+            <p .post-content .m-t>#{preEscapedToMarkup $ postContent post}
+    <div .col-sm-3>
+      <div #calendar>
+        <p>Syyskuu - 2015
+        <p>Ma Ti Ke To Pe La Su
+        <p>01 02 03 04 05 06 07
+        <p>08 09 10 11 12 13 14
+        <p>15 16 17 18 19 20 21
+        <p>22 23 24 25 26 27 28
+        <p>29 30 31 01 02 03 04
+      <div #partners>
+        <a href=http://www.innovadiscs.com/ target=_blank>
+          <img .center-block .img-responsive alt=http://www.innovadiscs.com/ title=Innova src=@{StaticR img_innova_outline_color_png}>
+        <a href=http://www.innovastore.fi/ target=_blank>
+          <img .center-block .img-responsive alt=http://www.innovastore.fi/ title=InnovaStore src=@{StaticR img_innovastore_logo_png}>
+        <a href=https://www.facebook.com/ISLielahti target=_blank>
+          <img .center-block .img-responsive alt=https://www.facebook.com/ISLielahti title=Intersport src=@{StaticR img_intersport_logo_jpg}>
+        <a href=https://www.facebook.com/groups/269964159713029/ target=_blank>
+          <img .center-block .img-responsive alt=https://www.facebook.com/groups/269964159713029/ title=Facebook src=@{StaticR img_facebook_png}>

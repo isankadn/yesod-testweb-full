@@ -1,0 +1,60 @@
+(function() {
+
+  var postsList = $("ul#posts");
+  var removeButtons = postsList.find("li button#remove");
+  var editButtons = postsList.find("li button#edit");
+  var saveButtons = postsList.find("li button#save");
+  var cancelButtons = postsList.find("li button#cancel");
+
+  removeButtons.on("click", function() {
+    var self = $(this);
+    var item = self.parent();
+    var url = self.data("url");
+    // remove from db
+    $.ajax({
+      type: 'DELETE',
+      url: url,
+      success: function() {
+        // remove from page
+        item.remove();
+      }
+    });
+  });
+
+  saveButtons.on("click", function() {
+    var self = $(this);
+    var item = self.parent();
+    var url = self.data("url");
+    var title = item.find("input").val();
+    var content = item.find("textarea").val();
+    $.ajax({
+      type: 'PUT',
+      url: url,
+      data: { title: title, content: content },
+      success: function() {
+        toggleElements(self);
+        item.find("p").text(title);
+      }
+    });
+  });
+
+  editButtons.on("click", function() {
+    toggleElements($(this));
+  });
+
+  cancelButtons.on("click", function() {
+    toggleElements($(this));
+  });
+
+  function toggleElements(self) {
+    var item = self.parent();
+    item.find("p").toggle();
+    item.find("label").toggle();
+    item.find("input").toggle();
+    item.find("textarea").toggle();
+    item.find("button#edit").toggle();
+    item.find("button#cancel").toggle();
+    item.find("button#save").toggle();
+  }
+
+})();

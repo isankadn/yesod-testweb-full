@@ -1,0 +1,32 @@
+User
+  name Text
+  email Text Maybe
+  password Text Maybe
+  admin Bool
+  superAdmin Bool
+  UniqueUser name
+  deriving Show
+
+Post
+  user UserId
+  created UTCTime
+  modified UTCTime Maybe
+  title Text
+  content Textarea
+  deriving Show
+
+Event
+  user UserId
+  created UTCTime
+  modified UTCTime Maybe
+  content Textarea
+  title Text
+  organizer Text
+  startTime UTCTime
+  endTime UTCTime Maybe
+  displayPost Bool
+  deriving Show
+
+ClubMember
+  pdgaNumber Int
+  deriving Show

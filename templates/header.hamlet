@@ -1,0 +1,26 @@
+<nav .navbar .navbar-light>
+  <div .container>
+    <a .navbar-brand href=@{HomeR}>
+      Tampereen Frisbeeseura
+    <button .pull-right .navbar-toggler .hidden-sm-up type=button data-toggle=collapse data-target=#navbar>
+      &#9776;
+    <div .collapse .navbar-toggleable-xs #navbar .pull-right>
+      <ul .nav .navbar-nav>
+        <li .nav-item>
+          <a .nav-link href="#">_{MsgNavClub}
+        <li .nav-item>
+          <a .nav-link href="#">_{MsgNavCompanies}
+        <li .nav-item>
+          <a .nav-link href="#">_{MsgNavCourses}
+        <li .nav-item>
+          <a .nav-link href="#">_{MsgNavWeeklyCompetitions}
+        <li .nav-item>
+          <a .nav-link href="#">_{MsgNavForum}
+        <li .nav-item>
+          <a .nav-link href="#">_{MsgNavArchive}
+        <li .nav-item>
+          <a .nav-link href="#">_{MsgNavContact}
+        $maybe (Entity _ user) <- muser
+          $if userAdmin user
+            <li .nav-item>
+              <a .nav-link href=@{AdminR}>_{MsgNavAdmin}
