@@ -35,8 +35,7 @@ import Handler.Home
 import Handler.Admin
 import Handler.Post
 import Handler.Event
-import Handler.AddUser
-import Handler.Users
+import Handler.User
 import Handler.Image
 
 -- This line actually creates our YesodDispatch instance. It is the second half
