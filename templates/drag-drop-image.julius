@@ -27,9 +27,8 @@
         processData: false,
         contentType: file.type,
         success: function(url) {
-          console.log(url);
           var textArea = $('textarea');
-          textArea.val(textArea.val() + '<img class="m-t m-b center-block img-responsive" src="' + url + '"/>');
+          textArea.val(textArea.val() + '\r\n' + '#{rawJS imagePrefix}' + url + '\r\n');
         },
         error: function(res) {
           alert('#{rawJS $ mr MsgImageUploadFailed}');

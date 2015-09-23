@@ -1,0 +1,5 @@
+<div .container>
+  <form .m-t method=post action=@{PostR pid}#form enctype=#{formEnctype}>
+    ^{formWidget}
+
+  <a href=@{PostsR} .btn .btn-secondary .btn-block .btn-lg>_{MsgBack}

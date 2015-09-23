@@ -19,14 +19,15 @@ Event
   user UserId
   created UTCTime
   modified UTCTime Maybe
-  content Textarea
   title Text
   organizer Text
-  startTime UTCTime
-  endTime UTCTime Maybe
-  displayPost Bool
+  content Textarea
+  startDate Day
+  endDate Day Maybe
+  post PostId Maybe
   deriving Show
 
 ClubMember
   pdgaNumber Int
+  UniqueClubMember pdgaNumber
   deriving Show

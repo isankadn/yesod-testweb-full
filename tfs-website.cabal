@@ -27,9 +27,16 @@ library
                      Handler.Event
                      Handler.User
                      Handler.Image
+                     Handler.Companies
+                     Handler.Courses
+                     Handler.Club
+                     Handler.Competitions
+                     Handler.Contact
+                     Handler.ClubMember
                      Forms
                      Helpers
                      ErrorHandlers
+                     Datepicker
 
     if flag(dev) || flag(library-only)
         cpp-options:   -DDEVELOPMENT
@@ -94,6 +101,9 @@ library
                  , pwstore-fast
                  , blaze-markup
                  , wai
+                 , mime-mail
+                 , blaze-html
+                 , esqueleto
 
 executable         tfs-website
     if flag(library-only)

@@ -5,18 +5,5 @@
     <div .card-primary .card-header>_{MsgPosts}
     <ul #posts .list-group>
       $forall Entity pid post <- posts
-        <li .list-group-item .clearfix>
-          <p>#{postTitle post}
-          <label style="display: none;">Otsikko
-          <input name=title type=text .m-b .form-control style="display: none;" value=#{postTitle post}>
-          <label style="display: none;">Uutinen
-          <textarea name=content rows=10 .m-b .form-control style="display: none;">
-            #{unTextarea $ postContent post}
-          <button #remove data-url=@{PostR pid} .pull-right .m-l .btn .btn-danger>
-            _{MsgRemove}
-          <button #edit .pull-right .m-l .btn .btn-secondary>
-            _{MsgEdit}
-          <button #cancel .pull-right .m-l .btn .btn-secondary style="display: none;">
-            _{MsgCancel}
-          <button #save data-url=@{PostR pid} .pull-right .m-l .btn .btn-secondary style="display: none;">
-            _{MsgSave}
+        <a .list-group-item href=@{EditPostR pid}>
+          #{postTitle post}

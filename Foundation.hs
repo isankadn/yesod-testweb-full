@@ -33,7 +33,7 @@ instance HasHttpManager App where
 
 -- Set up i18n messages. See the message folder.
 -- yesod will overwrite this if it detects finnish
-mkMessage "App" "messages" "en"
+mkMessage "App" "messages" "fi"
 
 -- This is where we define all of the routes in our application. For a full
 -- explanation of the syntax, please see:
@@ -51,6 +51,9 @@ mkYesodData "App" $(parseRoutesFile "config/routes")
 -- | A convenient synonym for creating forms.
 type Form x = Html -> MForm (HandlerT App IO) (FormResult x, Widget)
 
+-- | A convenient synonym for database action.
+type DB a = ReaderT SqlBackend Handler a
+
 -- Please see the documentation for the Yesod typeclass. There are a number
 -- of settings which can be configured by overriding methods here.
 instance Yesod App where
@@ -61,7 +64,7 @@ instance Yesod App where
   -- Store session data on the client in encrypted cookies,
   -- default session idle timeout is 120 minutes
   makeSessionBackend _ = Just <$> defaultClientSessionBackend
-    120    -- timeout in minutes
+    (60 * 24 * 30) -- timeout in minutes, one month
     "config/client_session_key.aes"
 
   defaultLayout widget = do
@@ -84,6 +87,7 @@ instance Yesod App where
       $(widgetFile "header")
       $(widgetFile "message")
       $(widgetFile "default-layout")
+      setTitle "Tampereen Frisbeeseura"
     withUrlRenderer $(hamletFile "templates/default-layout-wrapper.hamlet")
 
   -- The page to be redirected to when authentication is required.
@@ -99,16 +103,25 @@ instance Yesod App where
   -- public
   isAuthorized HomeR _ = return Authorized
   isAuthorized (HomePageR _) _ = return Authorized
+  isAuthorized ClubR _ = return Authorized
+  isAuthorized CoursesR _ = return Authorized
+  isAuthorized ContactR _ = return Authorized
+  isAuthorized CompaniesR _ = return Authorized
+  isAuthorized CompetitionsR _ = return Authorized
 
   -- admin
   isAuthorized AdminR _ = isAdmin
   isAuthorized PostsR _ = isAdmin
   isAuthorized AddPostR _ = isAdmin
+  isAuthorized (EditPostR _) _ = isAdmin
   isAuthorized (PostR _) _ = isAdmin
   isAuthorized EventsR _ = isAdmin
   isAuthorized AddEventR _ = isAdmin
+  isAuthorized (EditEventR _) _ = isAdmin
   isAuthorized (EventR _) _ = isAdmin
   isAuthorized ImageR _ = isAdmin
+  isAuthorized ClubMembersR _ = isAdmin
+  isAuthorized (ClubMemberR _) _ = isAdmin
 
   -- super admin
   isAuthorized AddUserR _ = isSuperAdmin

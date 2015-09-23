@@ -1,0 +1,5 @@
+<div .container>
+  <form .m-t method=post action=@{EventR eid}#form enctype=#{formEnctype}>
+    ^{formWidget}
+
+  <a href=@{EventsR} .btn .btn-secondary .btn-block .btn-lg>_{MsgBack}

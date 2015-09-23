@@ -6,4 +6,5 @@
     <a href=@{EventsR} .btn .btn-secondary>_{MsgEditEvents}
     $if userSuperAdmin user
       <a href=@{UsersR} .btn .btn-secondary>_{MsgUsers}
+    <a href=@{ClubMembersR} .btn .btn-secondary>_{MsgClubMembers}
     <a href=@{AuthR LogoutR} .btn .btn-secondary>_{MsgLogout}

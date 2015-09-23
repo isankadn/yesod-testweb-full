@@ -1,0 +1,20 @@
+(function() {
+
+  var removeButtons = $("ul#members").find("li button#remove");
+
+  removeButtons.on("click", function() {
+    var self = $(this);
+    var item = self.parent();
+    var url = self.data("url");
+    // remove from db
+    $.ajax({
+      type: 'DELETE',
+      url: url,
+      success: function() {
+        // remove from page
+        item.remove();
+      }
+    });
+  });
+
+})();

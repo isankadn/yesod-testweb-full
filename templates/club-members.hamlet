@@ -1,0 +1,14 @@
+<div .container>
+  <form .m-t method=post action=@{ClubMembersR}#form enctype=#{formEnctype}>
+    ^{formWidget}
+
+  <a .m-t href=@{AdminR} .btn .btn-secondary .btn-block .btn-lg>_{MsgBack}
+
+  <div .m-t .card .card-inverse>
+    <div .card-primary .card-header>_{MsgClubMembers}
+    <ul #members .list-group>
+      $forall Entity mid member <- members
+        <li .list-group-item .clearfix>
+          <p>#{show $ clubMemberPdgaNumber member}
+          <button #remove data-url=@{ClubMemberR mid} .pull-right .m-l .btn .btn-danger>
+            _{MsgRemove}

@@ -1,6 +1,6 @@
 <div .container>
-  <a .m-t href=@{AdminR} .btn .btn-secondary .btn-block .btn-lg>_{MsgBack}
   <a .m-t href=@{AddUserR} .btn .btn-secondary .btn-block .btn-lg>_{MsgAddUser}
+  <a .m-t href=@{AdminR} .btn .btn-secondary .btn-block .btn-lg>_{MsgBack}
 
   <div .m-t  .card .card-inverse>
     <div .card-primary .card-header>_{MsgUsers} (#{length users})

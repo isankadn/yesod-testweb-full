@@ -40,3 +40,39 @@ NotImage: File you were trying to upload is not an image
 ImageUploadFailed: Uploading the image failed
 Edited: Edited
 Events: Events
+Event: Event
+Organizer: Organizer
+StartDate: Start date
+EndDate: End date
+EndDateInvalid: End date must be later than start date
+EventAdded: Event added
+EventEdited: Event edited
+Update: Update
+EditEvent: Edit event
+Modified: modified
+Companies: Companies
+ZipCode: ZIP code
+City: City
+Phone: Phone
+Sex: Sex
+DateOfBirth: Date of birth
+Membership: Membership
+Send: Send
+Magazine: Magazine
+Check: Check
+MembershipDisc: Membership disc
+Address: Address
+PDGANumber: PDGA Number
+FirstName: First name
+LastName: Last name
+CheckError: Check error
+LicenseAdultA: A-license, adult 55€
+LicenseAdultB: B-license, adult 20€
+LicenseJuniorA: A-license, junior 30€
+LicenseJuniorB: B-license, junior 10€
+Adult: Adult
+Junior: Junior
+Male: Male
+Female: Female
+MembershipDiscLabel: PDGA membership disc (only new members) 10€
+MagazineLabel: PDGA Discgolfer-magazine 30€

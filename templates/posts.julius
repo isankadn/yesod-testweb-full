@@ -27,6 +27,7 @@
     var url = self.data("url");
     var title = item.find("input").val();
     var content = item.find("textarea").val();
+    console.log(content);
     $.ajax({
       type: 'PUT',
       url: url,

@@ -14,7 +14,7 @@ module Application
 
 import Control.Monad.Logger                 (liftLoc, runLoggingT)
 import Database.Persist.MySQL               (createMySQLPool, myConnInfo,
-                                             myPoolSize, runSqlPool)
+                                             myPoolSize, runSqlPool, runMigrationUnsafe)
 import Import
 import Language.Haskell.TH.Syntax           (qLocation)
 import Network.Wai.Handler.Warp             (Settings, defaultSettings,
@@ -37,6 +37,12 @@ import Handler.Post
 import Handler.Event
 import Handler.User
 import Handler.Image
+import Handler.Companies
+import Handler.Courses
+import Handler.Club
+import Handler.Competitions
+import Handler.Contact
+import Handler.ClubMember
 
 -- This line actually creates our YesodDispatch instance. It is the second half
 -- of the call to mkYesodData which occurs in Foundation.hs. Please see the
@@ -77,7 +83,7 @@ makeFoundation appSettings = do
         (myPoolSize $ appDatabaseConf appSettings)
 
     -- Perform database migration using our application's logging settings.
-    runLoggingT (runSqlPool (runMigration migrateAll) pool) logFunc
+    runLoggingT (runSqlPool (runMigrationUnsafe migrateAll) pool) logFunc
 
     -- Return the foundation
     return $ mkFoundation pool

@@ -3,20 +3,7 @@
 
   <div .m-t .card .card-inverse>
     <div .card-primary .card-header>_{MsgEvents}
-    <ul #posts .list-group>
+    <ul #events .list-group>
       $forall Entity eid event <- events
-        <li .list-group-item .clearfix>
-          <p>#{eventTitle event}
-          <label style="display: none;">Otsikko
-          <input name=title type=text .m-b .form-control style="display: none;" value=#{eventTitle event}>
-          <label style="display: none;">Uutinen
-          <textarea name=content rows=10 .m-b .form-control style="display: none;">
-            #{unTextarea $ eventContent event}
-          <button #remove data-url=@{EventR eid} .pull-right .m-l .btn .btn-danger>
-            _{MsgRemove}
-          <button #edit .pull-right .m-l .btn .btn-secondary>
-            _{MsgEdit}
-          <button #cancel .pull-right .m-l .btn .btn-secondary style="display: none;">
-            _{MsgCancel}
-          <button #save data-url=@{EventR eid} .pull-right .m-l .btn .btn-secondary style="display: none;">
-            _{MsgSave}
+        <a .list-group-item href=@{EditEventR eid}>
+          #{eventTitle event}
