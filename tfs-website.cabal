@@ -37,6 +37,7 @@ library
                      Helpers
                      ErrorHandlers
                      Datepicker
+                     Calendar
 
     if flag(dev) || flag(library-only)
         cpp-options:   -DDEVELOPMENT

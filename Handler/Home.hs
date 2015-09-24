@@ -6,6 +6,7 @@ import Data.Time.LocalTime
 import Text.Blaze
 
 import Helpers
+import Calendar
 
 -- how many posts get displayed in the front page
 postsPerPage :: Int
@@ -24,6 +25,7 @@ getHomePageR page = do
     return (p, e)
   tz <- liftIO getCurrentTimeZone
   now <- liftIO getCurrentTime
+  day <- liftIO today
   defaultLayout $ do
     setTitle "Tampereen Frisbeeseura"
     $(widgetFile "banner")

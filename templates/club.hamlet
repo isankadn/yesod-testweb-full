@@ -123,15 +123,15 @@
           <br>
           <select .c-select name=day required>
               <option>-
-            $forall day <- days
+            $forall day <- formDays
               <option value=#{day}>#{show day}
           <select .c-select name=month required>
               <option>-
-            $forall month <- months
+            $forall month <- formMonths
               <option value=#{month}>#{show month}
           <select .c-select name=year required>
               <option>-
-            $forall year <- years
+            $forall year <- formYears
               <option value=#{year - 1914}>#{show year}
         <div .form-group>
           <label>_{MsgPDGANumber} (jos sinulla on)

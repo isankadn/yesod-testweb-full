@@ -82,3 +82,10 @@ MemberAdded: Jäsen lisätty
 Add: Lisää
 EditPost: Muokkaa uutista
 PostEdited: Uutinen muokattu
+MondayShort: ma
+TuesdayShort: ti
+WednesdayShort: ke
+ThursdayShort: to
+FridayShort: pe
+SaturdayShort: la
+SundayShort: su

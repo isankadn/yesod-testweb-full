@@ -13,3 +13,16 @@ div#banner
   background: url(@{StaticR img_hiedanranta3_jpg}) center top
   width: 100%
   overflow: hidden
+
+table#calendar
+  text-align: center
+  margin: auto
+
+table#calendar thead tr th, table#calendar tbody tr th
+  text-align: center
+
+table#calendar td
+  padding: 10px
+
+.arrow
+  cursor: pointer

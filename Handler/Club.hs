@@ -10,14 +10,17 @@ import Text.Shakespeare.Text (stext)
 import qualified Data.Text.Lazy.Encoding
 
 import Forms
+import Helpers
+import Calendar
 
 getClubR :: Handler Html
 getClubR = do
   -- ((_, formWidget), formEnctype) <- runFormPost joinForm
-  let days, months, years :: [Int]
-      days = [1..31]
-      months = [1..12]
-      years = [1915..2015]
+  let formDays, formMonths, formYears :: [Int]
+      formDays = [1..31]
+      formMonths = [1..12]
+      formYears = [1915..2015]
+  day <- liftIO today
   defaultLayout $ do
     $(widgetFile "banner")
     let sidebar = $(widgetFile "sidebar")
@@ -112,7 +115,7 @@ sendJoinMail member@Member {..} = do
             #{phone}
             #{email}
             #{showSex sex}
-            #{day}.#{month}.#{year}
+            #{dobDay}.#{dobMonth}.#{dobYear}
             #{showPdga mpdga}
             #{showMembership membership}
             #{showLicense membership license}
@@ -167,9 +170,9 @@ data Member = Member
   , phone :: Text
   , email :: Text
   , sex :: Sex
-  , day :: Int
-  , month :: Int
-  , year :: Int
+  , dobDay :: Int
+  , dobMonth :: Int
+  , dobYear :: Int
   , mpdga :: Maybe Int
   , membership :: Membership
   , license :: License
