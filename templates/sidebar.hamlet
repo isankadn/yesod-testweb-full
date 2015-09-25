@@ -1,5 +1,5 @@
 <div .col-sm-3>
-  ^{calendarWidget $ calendar day}
+  ^{widget}
 
   <div #partners>
     <a href=http://www.innovadiscs.com/ target=_blank>

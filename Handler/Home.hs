@@ -7,6 +7,7 @@ import Text.Blaze
 
 import Helpers
 import Calendar
+import Model.Event
 
 -- how many posts get displayed in the front page
 postsPerPage :: Int
@@ -25,11 +26,12 @@ getHomePageR page = do
     return (p, e)
   tz <- liftIO getCurrentTimeZone
   now <- liftIO getCurrentTime
-  day <- liftIO today
+  widget <- calendarWidget
   defaultLayout $ do
     setTitle "Tampereen Frisbeeseura"
     $(widgetFile "banner")
     let sidebar = $(widgetFile "sidebar")
+    $(widgetFile "calendar")
     $(widgetFile "home")
 
 getPosts :: Int -> DB [Entity Post]
@@ -38,10 +40,4 @@ getPosts page = selectList
   [ Desc PostCreated
   , LimitTo postsPerPage
   , OffsetBy $ (page - 1) * postsPerPage
-  ]
-
-getEvents :: DB [Entity Event]
-getEvents = selectList
-  []
-  [ Desc EventStartDate
   ]

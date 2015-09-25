@@ -4,12 +4,14 @@ import Import
 
 import Helpers
 import Calendar
+import Model.Event
 
 getCompaniesR :: Handler Html
 getCompaniesR = do
-  day <- liftIO today
+  widget <- calendarWidget
   defaultLayout $ do
     setTitleI MsgCompanies
     $(widgetFile "banner")
     let sidebar = $(widgetFile "sidebar")
+    $(widgetFile "calendar")
     $(widgetFile "companies")

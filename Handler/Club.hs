@@ -20,10 +20,11 @@ getClubR = do
       formDays = [1..31]
       formMonths = [1..12]
       formYears = [1915..2015]
-  day <- liftIO today
+  widget <- calendarWidget
   defaultLayout $ do
     $(widgetFile "banner")
     let sidebar = $(widgetFile "sidebar")
+    $(widgetFile "calendar")
     $(widgetFile "club")
 
 postClubR :: Handler Html

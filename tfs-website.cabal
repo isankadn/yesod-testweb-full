@@ -38,6 +38,7 @@ library
                      ErrorHandlers
                      Datepicker
                      Calendar
+                     Model.Event
 
     if flag(dev) || flag(library-only)
         cpp-options:   -DDEVELOPMENT

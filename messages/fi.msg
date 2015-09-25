@@ -89,3 +89,16 @@ ThursdayShort: to
 FridayShort: pe
 SaturdayShort: la
 SundayShort: su
+January: tammikuu
+February: helmikuu
+March: maaliskuu
+April: huhtikuu
+May: toukokuu
+June: kesäkuu
+July: heinäkuu
+August: elokuu
+September: syyskuu
+October: lokakuu
+November: marraskuu
+Devember: joulukuu
+UnknownMonth: ?

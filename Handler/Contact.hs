@@ -7,8 +7,9 @@ import Calendar
 
 getContactR :: Handler Html
 getContactR = do
-  day <- liftIO today
+  widget <- calendarWidget
   defaultLayout $ do
     $(widgetFile "banner")
     let sidebar = $(widgetFile "sidebar")
+    $(widgetFile "calendar")
     $(widgetFile "contact")

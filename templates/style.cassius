@@ -26,3 +26,16 @@ table#calendar td
 
 .arrow
   cursor: pointer
+
+table#calendar tds
+  border: 1px solid transparent
+
+table#calendar td.current-day
+  border: 1px solid darkgray
+
+table#calendar td.event
+  background: transparent
+  -ms-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#FF8AAEC0,endColorstr=#FF8AAEC0)
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#FF8AAEC0,endColorstr=#FF8AAEC0)
+  zoom: 1
+  background-color: hsla(0, 0%, 90%, 1)
