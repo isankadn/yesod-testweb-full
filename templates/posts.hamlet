@@ -1,4 +1,5 @@
 <div .container>
+
   <a .m-t href=@{AdminR} .btn .btn-secondary .btn-block .btn-lg>_{MsgBack}
 
   <div .m-t .card .card-inverse>

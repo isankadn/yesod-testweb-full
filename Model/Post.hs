@@ -9,3 +9,7 @@ getPosts page postsPerPage = selectList
   , LimitTo postsPerPage
   , OffsetBy $ (page - 1) * postsPerPage
   ]
+
+mkPostFromEvent :: Event -> Post
+mkPostFromEvent Event {..} =
+  Post eventUser eventCreated Nothing eventTitle eventContent

@@ -102,3 +102,6 @@ October: lokakuu
 November: marraskuu
 Devember: joulukuu
 UnknownMonth: ?
+DeletePost: Poista uutinen
+DeletePostError: Uutisen poistaminen epäonnistui
+DeleteEventError: Tapahtuman poistaminen epäonnistui

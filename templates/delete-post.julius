@@ -1,0 +1,18 @@
+(function() {
+
+  $('button#delete-post').on('click', function() {
+    var url = $(this).data('url');
+    // remove from db
+    $.ajax({
+      type: 'DELETE',
+      url: url,
+      success: function() {
+        window.location.href = '@{PostsR}';
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        $('div#post-delete-error').toggle();
+      }
+    });
+  });
+
+})();

@@ -1,5 +1,11 @@
 <div .container>
+
+  <div .m-t #post-delete-error .alert .alert-danger .alert-dismissible role=alert style="display: none;">
+    _{MsgDeletePostError}
+
   <form .m-t method=post action=@{PostR pid}#form enctype=#{formEnctype}>
     ^{formWidget}
 
-  <a href=@{PostsR} .btn .btn-secondary .btn-block .btn-lg>_{MsgBack}
+  <button #delete-post data-url=@{PostR pid} .m-t .btn .btn-danger .btn-block .btn-lg>_{MsgRemove}
+
+  <a .m-t href=@{PostsR} .btn .btn-secondary .btn-block .btn-lg>_{MsgBack}

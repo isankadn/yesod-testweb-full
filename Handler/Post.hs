@@ -72,6 +72,7 @@ getEditPostR pid = do
     setTitleI MsgEditPost
     mr <- getMessageRender
     $(widgetFile "drag-drop-image")
+    $(widgetFile "delete-post")
     $(widgetFile "edit-post")
 
 newPostForm :: UserId -> UTCTime -> Form Post
@@ -122,6 +123,6 @@ editPostForm time post extra = do
           <label .control-label>^{fvLabel contentView}
           ^{fvInput contentView}
         <div .form-group>
-          <input type=submit .btn .btn-secondary .btn-block .btn-lg value=_{MsgEditPost}>
+          <input type=submit .btn .btn-secondary .btn-block .btn-lg value=_{MsgSave}>
       |]
   return (result, widget)
