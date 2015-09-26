@@ -5,7 +5,6 @@ where
 
 import Import hiding (for)
 
-import Data.Time.LocalTime
 import Data.Time.Calendar
 import Data.Time.Calendar.WeekDate
 import Data.Time.Calendar.MonthDay
@@ -21,14 +20,7 @@ data Calendar = Calendar
 data Month = Month
   { month :: Int
   , year :: Integer
-  , current :: Bool
-  , weeks :: [[CalendarDay]]
-  }
-  deriving (Show)
-
-data CalendarDay = CalendarDay
-  { day :: Day
-  , events :: [Text]
+  , weeks :: [[Day]]
   }
   deriving (Show)
 
@@ -39,10 +31,10 @@ calendarWidget = do
   return $ calendarWidget' day events
 
 calendarWidget' :: Day -> [Entity Event] -> Widget
-calendarWidget' currentDay events2 = [whamlet|
+calendarWidget' currentDay events = [whamlet|
   <div #calendar-container>
     $forall m <- months $ calendar currentDay
-      <table #calendar :(not $ current m):style="display: none;">
+      <table #calendar :(not $ sameMonth (month m) currentDay):style="display: none;">
         <thead>
           <tr>
             <th #prev .arrow><
@@ -59,15 +51,28 @@ calendarWidget' currentDay events2 = [whamlet|
             <th>_{MsgSundayShort}
           $forall week <- weeks m
             <tr>
-              $forall CalendarDay day events <- week
-                <td title=#{intercalate ", " events}  :(not $ sameMonth currentDay day):.text-muted :(not $ null events):.event :(currentDay == day):.current-day>
+              $forall day <- week
+                <td title=#{eventTitles events day} :(not $ sameMonth (month m) day):.text-muted :(not $ null $ eventTitles events day):.event :(currentDay == day):.current-day>
                   #{show $ thd $ toGregorian day}
                   $if not $ null events
                     <a href=#>
 |]
 
-sameMonth :: Day -> Day -> Bool
-sameMonth day1 day2 = (snd3 $ toGregorian day1) == (snd3 $ toGregorian day2)
+eventTitles :: [Entity Event] -> Day -> Text
+eventTitles allEvents day = intercalate ", " $ map eventTitle events
+  where
+    events = filter (\e -> day `elem` eventDays e) $ map entityVal allEvents
+
+eventDays :: Event -> [Day]
+eventDays event =
+  case eventEndDate event of
+    Just end -> [addDays i start | i <- [0..diffDays end start]]
+    Nothing -> [start]
+  where
+    start = eventStartDate event
+
+sameMonth :: Int -> Day -> Bool
+sameMonth month day = month == (snd3 $ toGregorian day)
 
 monthMsg :: Int -> AppMessage
 monthMsg 1 = MsgJanuary
@@ -90,8 +95,7 @@ calendar day =
   let
     (year, month, _) = toGregorian day
   in
-    Calendar $ for (months year month) $ \(y, m) ->
-      Month m y (month == m) $ oneMonth y m
+    Calendar $ for (months year month) $ \(y, m) -> Month m y $ oneMonth y m
   where
     months :: Integer -> Int -> [(Integer, Int)]
     months year month = for [0..11] $ \i -> validYearAndMonth year (month - 5 + i)
@@ -104,17 +108,17 @@ calendar day =
           then (y + 1, m - 12) -- next year
           else (y, m) -- all is good
 
-oneMonth :: Integer -> Int -> [[CalendarDay]]
+oneMonth :: Integer -> Int -> [[Day]]
 oneMonth year month = toWeeks $ allDaysInMonth year month
 
 -- break 42 days in to 6 weeks
-toWeeks :: [CalendarDay] -> [[CalendarDay]]
+toWeeks :: [Day] -> [[Day]]
 toWeeks (d1:d2:d3:d4:d5:d6:d7:days) = [d1,d2,d3,d4,d5,d6,d7]:toWeeks days
 toWeeks _ = []
 
--- return a list of 42 ints that has all the days in given month
+-- return a list of 42 days that has all the days in given month
 -- and some additional days from previous and next month
-allDaysInMonth :: Integer -> Int -> [CalendarDay]
+allDaysInMonth :: Integer -> Int -> [Day]
 allDaysInMonth year month =
   let
     -- first day of this month (week date)
@@ -136,7 +140,7 @@ allDaysInMonth year month =
     -- if this month ends in sunday then this is empty
     nextMonthDays = daysFromNextMonth nextYear nextMonth lastDay
     -- list of days in this month
-    currentMonthDays = for [1..currentMonth] $ \i -> CalendarDay (fromGregorian year month i) []
+    currentMonthDays = for [1..currentMonth] (fromGregorian year month)
     -- all the days together
     allDays = prevMonthDays ++ currentMonthDays ++ nextMonthDays
     -- rare case where in a leap year February starts in monday and
@@ -148,16 +152,26 @@ allDaysInMonth year month =
       then [(length nextMonthDays)+1..(length nextMonthDays)+(7*howManyWeeks)]
       else []
   in
-    allDays ++ (for additionalWeeks $ \i -> CalendarDay (fromGregorian nextYear nextMonth i) [])
+    allDays ++ (for additionalWeeks (fromGregorian nextYear nextMonth))
 
-daysFromPreviousMonth :: Integer -> Int -> Int -> Int -> [CalendarDay]
+-- list of days from previous month depending on what day does
+-- the current month start
+-- if first day is 0 (Monday) then this will return empty list
+-- if first day is 6 (Sunday) then this will return six days
+-- numbered according to the previous month e.g. [26, 27, 28, 29, 30, 31]
+daysFromPreviousMonth :: Integer -> Int -> Int -> Int -> [Day]
 daysFromPreviousMonth year month days firstDay =
-  reverse [CalendarDay (fromGregorian year month (days - i + 1)) [] | i <- [1..firstDay]]
+  reverse [(fromGregorian year month (days - i + 1)) | i <- [1..firstDay]]
 
-daysFromNextMonth :: Integer -> Int -> Int -> [CalendarDay]
+-- list of days from next month depending on what day does
+-- the current month end
+-- if last day is 0 (Monday) then this will return six days [1, 2, 3, 4, 5, 6]
+-- if last day is 6 (Sunday) then this will return empty list
+daysFromNextMonth :: Integer -> Int -> Int -> [Day]
 daysFromNextMonth year month lastDay =
-  for [1..6-lastDay] $ \i -> CalendarDay (fromGregorian year month i) []
+  for [1..6-lastDay] (fromGregorian year month)
 
+-- number of days in given month
 daysInMonth :: Integer -> Int -> Int
 daysInMonth y m = monthLength (isLeapYear y) m
 
@@ -165,10 +179,12 @@ daysInMonth y m = monthLength (isLeapYear y) m
 dayOfWeek :: Day -> Int
 dayOfWeek day = (thd $ toWeekDate day) - 1
 
+-- if january go to december and decrease year by one
 prevMonthAndYear :: Integer -> Int -> (Integer, Int)
 prevMonthAndYear year 1 = (year - 1, 12)
 prevMonthAndYear year month = (year, month - 1)
 
+-- if december go to january and increase year by one
 nextMonthAndYear :: Integer -> Int -> (Integer, Int)
 nextMonthAndYear year 12 = (year + 1, 1)
 nextMonthAndYear year month = (year, month + 1)

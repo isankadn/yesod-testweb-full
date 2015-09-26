@@ -39,6 +39,7 @@ library
                      Datepicker
                      Calendar
                      Model.Event
+                     Model.Post
 
     if flag(dev) || flag(library-only)
         cpp-options:   -DDEVELOPMENT
