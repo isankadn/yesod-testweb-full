@@ -12,29 +12,59 @@
 
     var files = e.originalEvent.dataTransfer.files;
 
-    for ( var i = 0, file; file = files[i]; ++i ) {
-
-      if ( !files[i].type.match(/image.*/) ) {
-        alert('#{rawJS $ mr MsgNotImage}');
-        continue;
-      }
-
-      $.ajax({
-        headers: { 'filename': file.name },
-        url: '@{ImageR}',
-        type: 'POST',
-        data: file,
-        processData: false,
-        contentType: file.type,
-        success: function(url) {
-          var textArea = $('textarea');
-          textArea.val(textArea.val() + '\r\n' + '#{rawJS imagePrefix}' + url + '\r\n');
-        },
-        error: function(res) {
-          alert('#{rawJS $ mr MsgImageUploadFailed}');
+    // normal file drag & drop
+    if (files.length > 0) {
+      for ( var i = 0, file; file = files[i]; ++i ) {
+        if ( !files[i].type.match(/image.*/) ) {
+          alert('#{rawJS $ mr MsgNotImage}');
+          continue;
         }
-      });
+        $.ajax({
+          headers: { 'filename': file.name },
+          url: '@{ImageR}',
+          type: 'POST',
+          data: file,
+          processData: false,
+          contentType: file.type,
+          success: function(url) {
+            var textArea = $('textarea');
+            textArea.val(textArea.val() + '\r\n' + '#{rawJS imagePrefix}' + url + '\r\n');
+          },
+          error: function(res) {
+            alert('#{rawJS $ mr MsgImageUploadFailed}');
+          }
+        });
+      }
+    // drag & drop from another website
+    } else if (e.originalEvent.dataTransfer.getData('text/html').match(/src\s*=\s*"(.+?)"/).length > 1) {
+      var url = e.originalEvent.dataTransfer.getData('text/html').match(/src\s*=\s*"(.+?)"/)[1];
+      var filename = url.substr(url.lastIndexOf('/') + 1);
+      var fileType = 'image/' + url.substr(url.lastIndexOf('.') + 1);
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", url, true);
+      xhr.responseType = "arraybuffer";
+      xhr.onload = function(e) {
+        var arrayBufferView = new Uint8Array(this.response);
+        var blob = new Blob([arrayBufferView], { type: fileType });
+        $.ajax({
+          headers: { 'filename': filename },
+          url: '@{ImageR}',
+          type: 'POST',
+          data: blob,
+          processData: false,
+          contentType: blob.type,
+          success: function(url) {
+            var textArea = $('textarea');
+            textArea.val(textArea.val() + '\r\n' + '#{rawJS imagePrefix}' + url + '\r\n');
+          },
+          error: function(res) {
+            alert('#{rawJS $ mr MsgImageUploadFailed}');
+          }
+        });
+      };
+      xhr.send();
     }
+
   }
 
 })();
