@@ -6,9 +6,15 @@
 
   <div .m-t .card .card-inverse>
     <div .card-primary .card-header>_{MsgClubMembers}
-    <ul #members .list-group>
-      $forall Entity mid member <- members
-        <li .list-group-item .clearfix>
-          <p>#{show $ clubMemberPdgaNumber member}
-          <button #remove data-url=@{ClubMemberR mid} .pull-right .m-l .btn .btn-danger>
-            _{MsgRemove}
+    <table .table #members>
+      <tbody>
+        $forall Entity mid member <- members
+          <tr>
+            <td #name>
+              Placeholder for name
+            <td #pdga>
+              #{show $ clubMemberPdgaNumber member}
+            <td>
+              <div .pull-right>
+                <button #remove data-url=@{ClubMemberR mid} .pull-right .m-l .btn .btn-danger>
+                  _{MsgRemove}

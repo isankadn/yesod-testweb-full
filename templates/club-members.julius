@@ -1,10 +1,10 @@
 (function() {
 
-  var removeButtons = $("ul#members").find("li button#remove");
+  var removeButtons = $("table#members").find("td button#remove");
 
   removeButtons.on("click", function() {
     var self = $(this);
-    var item = self.parent();
+    var item = self.parent().parent().parent();
     var url = self.data("url");
     // remove from db
     $.ajax({
