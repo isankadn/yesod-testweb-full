@@ -2,8 +2,23 @@ module Model.Event where
 
 import Import
 
-getEvents :: DB [Entity Event]
-getEvents = selectList
-  []
-  [ Desc EventStartDate
-  ]
+import qualified Data.Text as T
+
+getEvents :: Day -> Day -> DB [Entity Event]
+getEvents start end =
+  selectList
+  (     [EventStartDate >=. start, EventStartDate <=. end]
+    ||. [EventEndDate >=. Just start, EventEndDate <=. Just end]
+  )
+  [Desc EventStartDate]
+
+getEventsDay :: Day -> DB [Entity Event]
+getEventsDay day =
+  selectList
+  (     [EventStartDate ==. day]
+    ||. [EventStartDate <. day, EventEndDate >=. Just day]
+  )
+  [Desc EventStartDate]
+
+toParagraphs :: Event -> [Text]
+toParagraphs event = (T.splitOn "\r\n\r\n") $ unTextarea $ eventContent event

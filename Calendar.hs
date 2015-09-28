@@ -27,7 +27,13 @@ data Month = Month
 calendarWidget :: Handler Widget
 calendarWidget = do
   day <- liftIO today
-  events <- runDB getEvents
+  -- TODO: calculate exact range
+  -- actually it would be better if the range was given as param
+  -- to calendar function but for now range of two years will have all the events
+  -- we might need
+  let start = addDays (-365) day
+      end = addDays 365 day
+  events <- runDB $ getEvents start end
   return $ calendarWidget' day events
 
 calendarWidget' :: Day -> [Entity Event] -> Widget
@@ -40,7 +46,6 @@ calendarWidget' currentDay events = [whamlet|
             <th #prev .arrow><
             <th colspan=5>_{monthMsg $ month m} - #{show $ year m}
             <th #next .arrow>>
-        <tbody>
           <tr>
             <th>_{MsgMondayShort}
             <th>_{MsgTuesdayShort}
@@ -49,13 +54,16 @@ calendarWidget' currentDay events = [whamlet|
             <th>_{MsgFridayShort}
             <th>_{MsgSaturdayShort}
             <th>_{MsgSundayShort}
+        <tbody>
           $forall week <- weeks m
             <tr>
               $forall day <- week
                 <td title=#{eventTitles events day} :(not $ sameMonth (month m) day):.text-muted :(not $ null $ eventTitles events day):.event :(currentDay == day):.current-day>
-                  #{show $ thd $ toGregorian day}
-                  $if not $ null events
-                    <a href=#>
+                  $if not $ null $ eventTitles events day
+                    <a href=@{DayR day}>
+                      #{show $ thd $ toGregorian day}
+                  $else
+                    #{show $ thd $ toGregorian day}
 |]
 
 eventTitles :: [Entity Event] -> Day -> Text

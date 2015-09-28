@@ -21,24 +21,27 @@ table#calendar
 table#calendar thead tr th, table#calendar tbody tr th
   text-align: center
 
-table#calendar td
-  padding: 10px
-
 .arrow
   cursor: pointer
 
-table#calendar tds
-  border: 1px solid transparent
-
 table#calendar td.current-day
-  border: 1px solid darkgray
+  background-color: hsla(0, 0%, 92%, 1)
 
 table#calendar td.event
-  background: transparent
-  -ms-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#FF8AAEC0,endColorstr=#FF8AAEC0)
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#FF8AAEC0,endColorstr=#FF8AAEC0)
-  zoom: 1
-  background-color: hsla(0, 0%, 90%, 1)
+  text-decoration: underline
+  font-weight: bold
 
-a.page-link
-  width: 50px
+td.event a
+  cursor: pointer
+
+table#calendar thead tr th
+  padding-bottom: 10px
+
+table#calendar td
+  padding: 5px 10px
+  text-align: center
+  line-height: 26px
+
+table#calendar td a
+  text-decoration: none
+  color: #000

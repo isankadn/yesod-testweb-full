@@ -1,12 +1,12 @@
 <div .col-sm-3>
   ^{widget}
 
-  <div #partners>
+  <div .m-t-lg .m-b-lg #partners>
+    <a href=https://www.facebook.com/groups/269964159713029/ target=_blank>
+      <img .m-b-lg .center-block .img-responsive alt=https://www.facebook.com/groups/269964159713029/ title=Facebook src=@{StaticR img_facebook_png}>
     <a href=http://www.innovadiscs.com/ target=_blank>
       <img .center-block .img-responsive alt=http://www.innovadiscs.com/ title=Innova src=@{StaticR img_innova_outline_color_png}>
     <a href=http://www.innovastore.fi/ target=_blank>
       <img .center-block .img-responsive alt=http://www.innovastore.fi/ title=InnovaStore src=@{StaticR img_innovastore_logo_png}>
     <a href=https://www.facebook.com/ISLielahti target=_blank>
       <img .center-block .img-responsive alt=https://www.facebook.com/ISLielahti title=Intersport src=@{StaticR img_intersport_logo_jpg}>
-    <a href=https://www.facebook.com/groups/269964159713029/ target=_blank>
-      <img .m-b-lg .center-block .img-responsive alt=https://www.facebook.com/groups/269964159713029/ title=Facebook src=@{StaticR img_facebook_png}>

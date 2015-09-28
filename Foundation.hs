@@ -108,6 +108,7 @@ instance Yesod App where
   isAuthorized ContactR _ = return Authorized
   isAuthorized CompaniesR _ = return Authorized
   isAuthorized CompetitionsR _ = return Authorized
+  isAuthorized (DayR _) _ = return Authorized
 
   -- admin
   isAuthorized AdminR _ = isAdmin

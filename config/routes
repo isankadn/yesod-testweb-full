@@ -34,3 +34,4 @@
 /admin/club-member/#ClubMemberId ClubMemberR DELETE
 
 /admin/image ImageR POST
+/events/#Day DayR GET

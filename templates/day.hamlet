@@ -1,0 +1,20 @@
+<div .container>
+  <div .row .m-t-lg .m-b-lg>
+    <div .col-sm-9>
+      <div #events>
+        $forall Entity _ event <- events
+          <div .event>
+            <h1 .event-title>#{eventTitle event}
+            <small .post-created .text-muted>
+              #{showTime tz $ eventCreated event}
+              $maybe modified <- eventModified event
+                , _{MsgModified} #{showTime tz modified}
+            $forall paragraph <- E.toParagraphs event
+              $maybe src <- maybeImage paragraph
+                <img .m-t-lg .m-b-lg .center-block .img-rounded .img-responsive src=#{src}>
+              $nothing
+                <p .m-t .post-content>#{toArea paragraph}
+
+
+
+    ^{sidebar}

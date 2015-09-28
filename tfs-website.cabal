@@ -33,6 +33,7 @@ library
                      Handler.Competitions
                      Handler.Contact
                      Handler.ClubMember
+                     Handler.Day
                      Forms
                      Helpers
                      ErrorHandlers

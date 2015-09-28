@@ -19,6 +19,8 @@ getHomeR = getHomePageR 1
 
 getHomePageR :: Int -> Handler Html
 getHomePageR page = do
+  t <- liftIO today
+  liftIO $ print t
   (posts, postCount) <- runDB $ do
     p <- getPosts page postsPerPage
     c <- count ([] :: [Filter Post])
