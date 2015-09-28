@@ -39,3 +39,6 @@ table#calendar td.event
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#FF8AAEC0,endColorstr=#FF8AAEC0)
   zoom: 1
   background-color: hsla(0, 0%, 90%, 1)
+
+a.page-link
+  width: 50px

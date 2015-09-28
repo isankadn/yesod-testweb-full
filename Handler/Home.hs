@@ -8,9 +8,9 @@ import Helpers
 import Calendar
 import Model.Post
 
--- how many posts get displayed in the front page
+-- how many posts get displayed in one page
 postsPerPage :: Int
-postsPerPage = 10
+postsPerPage = 5
 
 -- convenience handler for the user
 -- meaning "/" will be the same as "/1"
@@ -19,7 +19,11 @@ getHomeR = getHomePageR 1
 
 getHomePageR :: Int -> Handler Html
 getHomePageR page = do
-  posts <- runDB $ getPosts page postsPerPage
+  (posts, postCount) <- runDB $ do
+    p <- getPosts page postsPerPage
+    c <- count ([] :: [Filter Post])
+    return (p, c)
+  let pages = ceiling $ fromIntegral postCount / fromIntegral postsPerPage
   tz <- liftIO getCurrentTimeZone
   widget <- calendarWidget
   defaultLayout $ do
@@ -28,3 +32,16 @@ getHomePageR page = do
     let sidebar = $(widgetFile "sidebar")
     $(widgetFile "calendar")
     $(widgetFile "home")
+
+pageLinks :: Int -> Int -> [Int]
+pageLinks page pages
+  -- page can't be zero or negative
+  | page < 1 = []
+  -- trivial case when 5 or fewer pages
+  | pages <= 5 = [1..pages]
+  -- first tree pages
+  | page <= 3 = [1,2,3,4,pages]
+  -- last tree pages
+  | pages - page < 3 = [1, pages - 3, pages - 2, pages - 1, pages]
+  -- normal case
+  | otherwise = [1, page - 1, page, page + 1, pages]
