@@ -1,5 +1,5 @@
 flags:
-  tfs-website:
+  testweb:
     library-only: false
     dev: false
 packages:

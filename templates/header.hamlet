@@ -1,7 +1,7 @@
-<nav .navbar .navbar-light>
+<nav .navbar .navbar-light> 
   <div .container>
     <a .navbar-brand href=@{HomeR}>
-      Tampereen Frisbeeseura
+      Isanka 
     <button .pull-right .navbar-toggler .hidden-sm-up type=button data-toggle=collapse data-target=#navbar>
       &#9776;
     <div .collapse .navbar-toggleable-xs #navbar .pull-right>

@@ -1,5 +1,5 @@
 {-# LANGUAGE PackageImports #-}
-import "tfs-website" Application (develMain)
+import "testweb" Application (develMain)
 import Prelude (IO)
 
 main :: IO ()

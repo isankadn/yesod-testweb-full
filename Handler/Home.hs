@@ -29,7 +29,7 @@ getHomePageR page = do
   tz <- liftIO getCurrentTimeZone
   widget <- calendarWidget
   defaultLayout $ do
-    setTitle "Tampereen Frisbeeseura"
+    setTitle "Isanka"
     $(widgetFile "banner")
     let sidebar = $(widgetFile "sidebar")
     $(widgetFile "calendar")
